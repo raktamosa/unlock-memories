@@ -255,12 +255,12 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
   background:
     repeating-linear-gradient(180deg,transparent 0 33px,rgba(90,70,45,.18) 33px 34px),
     #fbf5e6;
-  padding:20px 22px 40px;
+  padding:20px 22px 64px;
   font-family:var(--font-hand);
   color:#2d241a;
   font-size:clamp(20px,3.2vw,27px);line-height:34px;
   box-shadow:0 5px 14px rgba(40,25,10,.28);
-  clip-path:polygon(0 0,100% 0,100% 94%,94% 97%,88% 94%,80% 98%,70% 95%,60% 98%,50% 95%,40% 98%,30% 95%,20% 98%,10% 95%,0 98%);
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 14px),94% calc(100% - 6px),88% calc(100% - 14px),80% 100%,70% calc(100% - 8px),60% 100%,50% calc(100% - 8px),40% 100%,30% calc(100% - 8px),20% 100%,10% calc(100% - 8px),0 100%);
 }
 .letter p+p{margin-top:34px}
 .leaf.right{display:flex}
