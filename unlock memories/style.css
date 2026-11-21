@@ -2,10 +2,10 @@
   --ink:#2a2119;
   --paper:#f1e9da;
   --paper-2:#e4d9c4;
-  --leather:#4b3a33;      
+  --leather:#4b3a33;
   --leather-d:#2c2220;
-  --night:#0d1017;        
-  --gold:#cdb68a;         
+  --night:#0d1017;
+  --gold:#cdb68a;
   --gold-l:#ecdcb8;
   --gold-d:#a98f5f;
   --glass:rgba(255,255,255,.06);
@@ -39,10 +39,10 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 
 #pageLock{
   background-color:var(--night);
-  background-image:var(--bg,none);   
+  background-image:var(--bg,none);
   background-size:cover;background-position:center;background-repeat:no-repeat;
 }
-#pageLock::before{ 
+#pageLock::before{
   content:"";position:absolute;inset:0;
   background:radial-gradient(ellipse at 50% 35%,rgba(13,16,23,.30),rgba(13,16,23,.88));
 }
@@ -70,7 +70,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .date-input{
   width:100%;max-width:300px;
   padding:14px 12px;
-  font:600 22px/1 var(--font-ui);   
+  font:600 22px/1 var(--font-ui);
   letter-spacing:.12em;text-align:center;
   color:var(--gold-l);background:rgba(8,10,16,.42);
   border:1px solid rgba(205,182,138,.6);border-radius:12px;
@@ -105,7 +105,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
   animation:drift 16s ease-in-out infinite;
   will-change:transform;
 }
-.moon-wrap::after{ 
+.moon-wrap::after{
   content:"";position:absolute;inset:-45%;border-radius:50%;
   background:radial-gradient(circle,rgba(236,220,184,.26),transparent 62%);
   animation:halo 7s ease-in-out infinite;z-index:-1;
@@ -118,7 +118,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
   box-shadow:inset -10px -12px 22px rgba(120,95,55,.38), 0 0 36px rgba(236,220,184,.30);
   color:#4a3a22;font-family:var(--font-title);
 }
-.moon::before{ 
+.moon::before{
   content:"";position:absolute;inset:0;
   background:
     radial-gradient(circle at 70% 24%,rgba(150,120,70,.20) 0 7%,transparent 8%),
@@ -141,7 +141,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 
 #pageBook{
   background-color:var(--night);
-  background-image:var(--bg,none);   
+  background-image:var(--bg,none);
   background-size:cover;background-position:center;background-repeat:no-repeat;
 }
 #pageBook::before{
@@ -190,15 +190,19 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
   padding:clamp(14px,3vw,30px);
   min-height:clamp(300px,52vh,440px);
 }
-.leaf.left{border-radius:10px 0 0 10px;
+.leaf.left{
+  border-radius:10px 0 0 10px;
   background:
     radial-gradient(ellipse at 100% 50%,rgba(120,90,50,.30),transparent 20%),
-    linear-gradient(180deg,var(--paper),var(--paper-2));}
-.leaf.right{border-radius:0 10px 10px 0;
+    linear-gradient(180deg,var(--paper),var(--paper-2));
+}
+.leaf.right{
+  border-radius:0 10px 10px 0;
   background:
     radial-gradient(ellipse at 0% 50%,rgba(120,90,50,.30),transparent 20%),
-    linear-gradient(180deg,var(--paper),var(--paper-2));}
-.rings{ 
+    linear-gradient(180deg,var(--paper),var(--paper-2));
+}
+.rings{
   position:absolute;left:50%;top:0;bottom:0;width:0;z-index:3;pointer-events:none;
 }
 .rings i{
@@ -208,62 +212,93 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 }
 .rings i:nth-child(1){top:18%}.rings i:nth-child(2){top:48%}.rings i:nth-child(3){top:78%}
 
-.leaf.left{display:flex;align-items:center;justify-content:center}
+/* ===== FOTO (kiri, menempel di kertas kiri) ===== */
+.leaf.left{container-type:size;display:block}
 
 .polaroids{
+  --pw:min(56cqw,27cqh);
   position:relative;
-  width:min(92%,54vh);
-  width:min(92%,54dvh);
-  aspect-ratio:1/1.1;
+  width:100%;height:100%;
 }
 .polaroid{
-  position:absolute;width:46%;
-  background:#fff;padding:7px 7px 24px;
+  position:absolute;width:var(--pw);
+  background:#fff;
+  padding:calc(var(--pw)*.06) calc(var(--pw)*.06) calc(var(--pw)*.2);
   box-shadow:0 6px 14px rgba(40,25,10,.38);
-  transition:transform .25s ease, z-index 0s;
+  transition:transform .25s ease;
 }
 .polaroid img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;background:#cdbf9f}
-.polaroid span{position:absolute;left:0;right:0;bottom:4px;text-align:center;font:500 16px/1 var(--font-hand);color:#5a4630}
-.polaroid:nth-child(1){left:0;top:0;transform:rotate(-4deg)}
-.polaroid:nth-child(2){right:0;top:24%;transform:rotate(4deg);z-index:2}
-.polaroid:nth-child(3){left:0;bottom:0;transform:rotate(-2deg);z-index:1}
+.polaroid span{
+  position:absolute;left:0;right:0;bottom:calc(var(--pw)*.04);
+  text-align:center;font:500 max(12px,calc(var(--pw)*.09))/1 var(--font-hand);color:#5a4630;
+}
+.polaroid:nth-child(1){left:0;top:2%;transform:rotate(-4deg)}
+.polaroid:nth-child(2){right:0;top:34%;transform:rotate(4deg);z-index:2}
+.polaroid:nth-child(3){left:0;bottom:2%;transform:rotate(-2deg);z-index:1}
 .polaroid:hover{transform:rotate(0) scale(1.06);z-index:5}
 
-@media (min-width:761px){
-  @supports (container-type:size){
-    .leaf.left{container-type:size;display:block}
-    .polaroids{
-      --pw:min(56cqw,27cqh);
-      width:100%;height:100%;aspect-ratio:auto;
-    }
-    .polaroid{
-      width:var(--pw);
-      padding:calc(var(--pw)*.06) calc(var(--pw)*.06) calc(var(--pw)*.2);
-    }
-    .polaroid span{
-      bottom:calc(var(--pw)*.04);
-      font-size:max(12px,calc(var(--pw)*.09));
-    }
-    .polaroid:nth-child(1){left:0;top:2%}
-    .polaroid:nth-child(2){right:0;top:34%}
-    .polaroid:nth-child(3){left:0;bottom:2%}
-  }
-}
+/* ===== SURAT (kanan, 3 lembar bertumpuk) ===== */
+.leaf.right{display:flex}
 
 .letter{
-  position:relative;flex:1;
-  background:
-    repeating-linear-gradient(180deg,transparent 0 33px,rgba(90,70,45,.18) 33px 34px),
-    #fbf5e6;
-  padding:20px 22px 64px;
+  position:relative;flex:1;min-width:0;
+  display:grid;grid-template-columns:minmax(0,1fr);
+  filter:drop-shadow(0 5px 8px rgba(40,25,10,.3));
   font-family:var(--font-hand);
   color:#2d241a;
-  font-size:clamp(20px,3.2vw,27px);line-height:34px;
-  box-shadow:0 5px 14px rgba(40,25,10,.28);
-  clip-path:polygon(0 0,100% 0,100% calc(100% - 14px),94% calc(100% - 6px),88% calc(100% - 14px),80% 100%,70% calc(100% - 8px),60% 100%,50% calc(100% - 8px),40% 100%,30% calc(100% - 8px),20% 100%,10% calc(100% - 8px),0 100%);
+  --lh:34px;
+  font-size:28px;line-height:var(--lh);
+  overflow-wrap:break-word;
 }
-.letter p+p{margin-top:34px}
-.leaf.right{display:flex}
+
+.sheet{
+  grid-area:1 / 1;
+  position:relative;
+  padding:20px clamp(10px,3vw,22px) 64px;
+  background:
+    repeating-linear-gradient(180deg,transparent 0 calc(var(--lh) - 1px),rgba(90,70,45,.18) calc(var(--lh) - 1px) var(--lh)),
+    #fbf5e6;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 14px),94% calc(100% - 6px),88% calc(100% - 14px),80% 100%,70% calc(100% - 8px),60% 100%,50% calc(100% - 8px),40% 100%,30% calc(100% - 8px),20% 100%,10% calc(100% - 8px),0 100%);
+  transform-origin:50% 0;
+  transform:perspective(1200px) rotateX(0deg);
+  cursor:pointer;
+  touch-action:manipulation;
+  outline:none;
+}
+.sheet.s1{z-index:3}
+.sheet.s2{z-index:2}
+.sheet.s3{z-index:1;cursor:default}
+.sheet p+p{margin-top:var(--lh)}
+
+/* ===== efek kertas digulung ke atas ===== */
+.sheet.flipped{
+  pointer-events:none;
+  -webkit-mask:linear-gradient(#000,#000) 0 0 / 100% var(--keep,100%) no-repeat;
+          mask:linear-gradient(#000,#000) 0 0 / 100% var(--keep,100%) no-repeat;
+}
+.sheet.gone{visibility:hidden}
+.sheet.flipped .tap-hint{display:none}
+
+/* ruang untuk gulungan di atas lembar ke-2 dan ke-3 (kelipatan 34px) */
+.sheet.s2{padding-top:calc(20px + var(--lh))}
+.sheet.s3{padding-top:calc(20px + var(--lh)*2)}
+
+.roll{
+  position:absolute;left:0;right:0;top:0;height:0;
+  z-index:6;pointer-events:none;opacity:0;
+  border-radius:10px;
+  background:linear-gradient(180deg,#b9a985 0%,#e6dabd 14%,#fffaf0 34%,#f4ead2 55%,#d6c8a6 82%,#a89774 100%);
+  box-shadow:0 8px 12px rgba(40,25,10,.4), inset 0 -2px 4px rgba(90,70,45,.25);
+}
+
+.tap-hint{
+  position:absolute;right:16px;bottom:24px;
+  font:600 11px/1 var(--font-ui);letter-spacing:.08em;
+  color:#7a6445;opacity:.85;
+  animation:bob 1.6s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+
 .btn-call{
   display:inline-block;margin-top:20px;padding:11px 26px;border-radius:999px;
   font:600 14px/1 var(--font-ui);letter-spacing:.08em;text-decoration:none;
@@ -273,9 +308,11 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 }
 .btn-call:hover{box-shadow:0 7px 20px rgba(40,25,10,.4)}
 .btn-call:active{transform:scale(.96)}
+
 .letter .clip{
-  position:absolute;right:18px;top:-8px;width:16px;height:46px;
+  position:absolute;right:18px;top:-8px;width:16px;height:46px;z-index:5;
   border:3px solid #a8a8a8;border-radius:10px;border-bottom-color:transparent;transform:rotate(8deg);
+  pointer-events:none;
 }
 
 .player{
@@ -315,13 +352,10 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .muted .ico-mute{display:block}
 
 @media (max-width:760px){
-  .book{grid-template-columns:minmax(0,1fr)}
-  .rings{display:none}
-  .leaf{min-height:0}
-  .leaf.left{border-radius:10px 10px 0 0}
-  .leaf.right{border-radius:0 0 10px 10px}
-  .polaroids{width:min(92%,440px)}
-  .letter{min-height:240px}
+  .letter{--lh:40px;font-size:clamp(26px,7vw,30px)}
+  .sheet{padding-bottom:84px}
+  .rings i{left:-10px;width:20px}
+  .leaf{padding:10px}
   .player{padding:8px 10px;gap:8px}
 }
 @media (max-height:520px) and (orientation:landscape){
@@ -330,4 +364,5 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition-duration:.01s!important}
+  .sheet.flipped{visibility:hidden}
 }
