@@ -212,7 +212,6 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 }
 .rings i:nth-child(1){top:18%}.rings i:nth-child(2){top:48%}.rings i:nth-child(3){top:78%}
 
-/* ===== FOTO (kiri, menempel di kertas kiri) ===== */
 .leaf.left{container-type:size;display:block}
 
 .polaroids{
@@ -237,7 +236,6 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .polaroid:nth-child(3){left:0;bottom:2%;transform:rotate(-2deg);z-index:1}
 .polaroid:hover{transform:rotate(0) scale(1.06);z-index:5}
 
-/* ===== SURAT (kanan, 3 lembar bertumpuk) ===== */
 .leaf.right{display:flex}
 
 .letter{
@@ -249,6 +247,7 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
   --lh:34px;
   font-size:28px;line-height:var(--lh);
   overflow-wrap:break-word;
+  text-wrap:pretty;
 }
 
 .sheet{
@@ -270,7 +269,6 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .sheet.s3{z-index:1;cursor:default}
 .sheet p+p{margin-top:var(--lh)}
 
-/* ===== efek kertas digulung ke atas ===== */
 .sheet.flipped{
   pointer-events:none;
   -webkit-mask:linear-gradient(#000,#000) 0 0 / 100% var(--keep,100%) no-repeat;
@@ -279,7 +277,6 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .sheet.gone{visibility:hidden}
 .sheet.flipped .tap-hint{display:none}
 
-/* ruang untuk gulungan di atas lembar ke-2 dan ke-3 (kelipatan 34px) */
 .sheet.s2{padding-top:calc(20px + var(--lh))}
 .sheet.s3{padding-top:calc(20px + var(--lh)*2)}
 
@@ -300,8 +297,9 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 
 .btn-call{
-  display:inline-block;margin-top:20px;padding:11px 26px;border-radius:999px;
+  display:inline-block;margin-top:20px;padding:12px 28px;border-radius:999px;
   font:600 14px/1 var(--font-ui);letter-spacing:.08em;text-decoration:none;
+  white-space:nowrap;text-align:center;
   color:#1f170e;background:linear-gradient(180deg,#e2d0a6,#b79d6c);
   box-shadow:0 5px 14px rgba(40,25,10,.3);
   touch-action:manipulation;transition:transform .15s, box-shadow .2s;
@@ -352,10 +350,18 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .muted .ico-mute{display:block}
 
 @media (max-width:760px){
-  .letter{--lh:40px;font-size:clamp(26px,7vw,30px)}
-  .sheet{padding-bottom:84px}
-  .rings i{left:-10px;width:20px}
-  .leaf{padding:10px}
+  .book-wrap{padding:0 6px 10px}
+  .book{grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);padding:4px}
+  .rings{left:35%}
+  .rings i{left:-9px;width:18px}
+  .leaf{padding:8px 4px}
+  .leaf.right{padding:8px 4px 8px 0}
+  .polaroids{--pw:min(88cqw,26cqh)}
+  .letter{--lh:34px;font-size:clamp(23px,6.2vw,27px)}
+  .sheet{padding-left:14px;padding-right:12px;padding-bottom:76px}
+  .sheet.s2{padding-top:calc(20px + var(--lh))}
+  .sheet.s3{padding-top:calc(20px + var(--lh)*2)}
+  .btn-call{padding:13px 26px}
   .player{padding:8px 10px;gap:8px}
 }
 @media (max-height:520px) and (orientation:landscape){

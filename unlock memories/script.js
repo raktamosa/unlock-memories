@@ -115,8 +115,7 @@
     player.classList.toggle("muted", audio.muted);
   });
 
-  /* ===== surat 3 lembar: ketuk -> kertas digulung ke atas ===== */
-  const letter = $("letter");
+    const letter = $("letter");
   const flipSheets = document.querySelectorAll(".sheet.s1, .sheet.s2");
   const rollSize = ()=>parseFloat(getComputedStyle(letter).lineHeight)||34;
   const reduceMotion = matchMedia("(prefers-reduced-motion:reduce)").matches;
@@ -147,6 +146,8 @@
     if(sheet.classList.contains("flipped")) return;
     sheet.classList.add("flipped");
     sheet.setAttribute("aria-hidden","true");
+    const wrap = document.querySelector(".book-wrap");
+    if(wrap) wrap.scrollTo({top:0,behavior:reduceMotion?"auto":"smooth"});
     const done = ()=>{ setRoll(sheet,1); sheet.classList.add("gone"); };
     if(reduceMotion){ done(); return; }
     const dur = 1000, t0 = performance.now();
