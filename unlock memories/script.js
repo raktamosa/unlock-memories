@@ -462,7 +462,7 @@
   input.addEventListener("input", ()=>{ input.classList.remove("error"); });
 
   function dateOK(){
-    return input.value.trim().length>0;
+    return input.value.trim().toLowerCase() === "bara";
   }
 
   let started = false;
