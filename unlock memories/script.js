@@ -446,8 +446,13 @@
       if(state!==0) return;
       const i = pick(ev.clientX,ev.clientY);
       hover = i;
-      if(i===2){ state = 1; zt0 = performance.now(); c.style.cursor = "default"; $("solarHint").classList.add("off"); startSong(); }
+      if(i===2){ state = 1; zt0 = performance.now(); c.style.cursor = "default"; $("solarHint").classList.add("off"); }
     });
+
+    const unlock = ()=>{ if(state>=1) startSong(); };
+    c.addEventListener("click",unlock);
+    c.addEventListener("pointerup",unlock);
+    c.addEventListener("touchend",unlock,{passive:true});
 
     resize();
     addEventListener("resize",resize);
