@@ -446,7 +446,7 @@
       if(state!==0) return;
       const i = pick(ev.clientX,ev.clientY);
       hover = i;
-      if(i===2){ state = 1; zt0 = performance.now(); c.style.cursor = "default"; }
+      if(i===2){ state = 1; zt0 = performance.now(); c.style.cursor = "default"; $("solarHint").classList.add("off"); }
     });
 
     resize();
