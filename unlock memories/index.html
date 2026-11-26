@@ -15,21 +15,21 @@
 
 <body>
 
-<section class="page" id="pageLock" style="--bg:url('bg.jpg')">
+<section class="page" id="pageSolar">
+  <canvas id="solar" aria-hidden="true"></canvas>
+</section>
+
+<section class="page hidden" id="pageLock" aria-hidden="true" style="--bg:url('bg.jpg')">
   <canvas id="stars" aria-hidden="true"></canvas>
 
   <div class="moon-wrap">
-    <div class="moon">
-      <span class="moon-label" id="moonLabel">isi tanggal ini</span>
-      <span class="moon-text" id="moonText">26/03</span>
-    </div>
+    <div class="moon"></div>
   </div>
 
-  <form class="lock-panel" id="lockForm" data-secret-date="26/03" autocomplete="off" novalidate>
-    <h1 class="lock-title">Enter Date<br>DD/MM</h1>
-    <input class="date-input" id="dateInput" type="text" inputmode="numeric"
-           maxlength="5" placeholder="DD/MM" aria-label="Masukkan tanggal">
-    <p class="err-msg" id="errMsg" role="alert"></p>
+  <form class="lock-panel" id="lockForm" autocomplete="off" novalidate>
+    <h1 class="lock-title">bulan meng-orbit bumi<br>dan aku meng-orbit untuk...</h1>
+    <input class="date-input" id="dateInput" type="text" maxlength="24"
+           placeholder="masukan nama-mu" aria-label="masukan nama-mu">
     <button class="btn-unlock" id="btnUnlock" type="submit">UNLOCK MEMORIES</button>
   </form>
 </section>
