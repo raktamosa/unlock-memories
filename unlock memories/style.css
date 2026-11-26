@@ -58,8 +58,9 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 .solar-hint{
   position:absolute;left:50%;bottom:max(6vh,env(safe-area-inset-bottom));
   transform:translateX(-50%);
-  font-family:var(--font-title);font-size:clamp(15px,4vw,20px);
-  letter-spacing:.14em;color:var(--gold-l);white-space:nowrap;
+  width:min(88vw,460px);text-align:center;line-height:1.5;
+  font-family:var(--font-title);font-size:clamp(14px,3.8vw,19px);
+  letter-spacing:.08em;color:var(--gold-l);
   text-shadow:0 0 14px rgba(143,176,255,.55);
   pointer-events:none;user-select:none;-webkit-user-select:none;
   opacity:0;animation:hintIn 1.2s 2.4s ease forwards, hintPulse 3.2s 3.6s ease-in-out infinite;
