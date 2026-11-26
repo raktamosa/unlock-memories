@@ -12,8 +12,8 @@
   audio.setAttribute("webkit-playsinline","");
   try{ audio.volume = 0.8; }catch(e){}
 
-  (function stars(){
-    const c = $("stars"), x = c.getContext("2d");
+  ["stars","stars2"].forEach(function(id){
+    const c = $(id), x = c.getContext("2d");
     let w, h, list = [];
     function size(){
       const d = Math.min(window.devicePixelRatio||1, 2);
@@ -35,7 +35,7 @@
     }
     size(); draw();
     addEventListener("resize", size);
-  })();
+  });
 
   (function solar(){
     const c = $("solar"), x = c.getContext("2d");
