@@ -72,28 +72,28 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 
 .lock-panel{
   position:relative;
-  width:min(88vw,320px);
-  padding:clamp(16px,4.5vw,26px);
-  border-radius:20px;
+  width:min(68vw,240px);
+  padding:clamp(12px,3.5vw,18px);
+  border-radius:16px;
   background:var(--glass);
   border:1px solid var(--glass-line);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   box-shadow:0 18px 50px rgba(0,0,0,.5), inset 0 1px 0 rgba(190,212,255,.22);
-  display:flex;flex-direction:column;align-items:center;gap:clamp(12px,3vw,16px);
+  display:flex;flex-direction:column;align-items:center;gap:clamp(9px,2.4vw,12px);
 }
 #pageLock:not(.hidden) .lock-panel{animation:panelIn .9s .3s ease both}
 @keyframes panelIn{from{opacity:0;transform:scale(.92) translateY(10px)}to{opacity:1;transform:none}}
 .lock-title{
   font-family:var(--font-title);
-  font-size:clamp(12px,4vw,16px);
+  font-size:clamp(10px,3.3vw,13px);
   font-weight:500;line-height:1.4;text-align:center;white-space:nowrap;
   letter-spacing:.02em;color:var(--gold-l);
 }
 
 .date-input{
-  width:100%;max-width:240px;
-  padding:10px 10px;
-  font:500 15px/1 var(--font-ui);
+  width:100%;max-width:190px;
+  padding:8px 8px;
+  font:500 12px/1 var(--font-ui);
   letter-spacing:.04em;text-align:center;
   color:var(--gold-l);background:rgba(8,10,16,.42);
   border:1px solid rgba(143,176,255,.6);border-radius:12px;
@@ -106,8 +106,8 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 @keyframes shake{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
 
 .btn-unlock{
-  padding:10px 22px;border-radius:999px;
-  font-weight:600;font-size:12px;letter-spacing:.08em;color:#071030;
+  padding:8px 16px;border-radius:999px;
+  font-weight:600;font-size:10px;letter-spacing:.08em;color:#071030;
   background:linear-gradient(180deg,#bcd2ff,#6f94ef);
   border:0;
   box-shadow:0 8px 24px rgba(0,0,0,.4), 0 0 26px rgba(143,176,255,.18);

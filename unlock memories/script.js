@@ -446,7 +446,7 @@
       if(state!==0) return;
       const i = pick(ev.clientX,ev.clientY);
       hover = i;
-      if(i===2){ state = 1; zt0 = performance.now(); c.style.cursor = "default"; $("solarHint").classList.add("off"); }
+      if(i===2){ state = 1; zt0 = performance.now(); c.style.cursor = "default"; $("solarHint").classList.add("off"); startSong(); }
     });
 
     resize();
@@ -581,14 +581,17 @@
     rolls.forEach(r=>{ r.style.opacity="0"; r.style.height="0"; r.style.top="0"; });
   }
 
+  function startSong(){
+    if(started) return;
+    started = true;
+    wantPlay = true;
+    if(audio.currentTime > 0){ try{ audio.currentTime = 0; }catch(e){} }
+    const p = audio.play();
+    if(p && p.catch) p.catch(()=>{ started = false; wantPlay = false; });
+  }
+
   function openBook(){
-    if(!started){
-      started = true;
-      wantPlay = true;
-      if(audio.currentTime > 0){ try{ audio.currentTime = 0; }catch(e){} }
-      const p = audio.play();
-      if(p && p.catch) p.catch(()=>{ started = false; wantPlay = false; });
-    }
+    startSong();
     pageLock.classList.add("hidden"); pageLock.setAttribute("aria-hidden","true");
     pageBook.classList.remove("hidden"); pageBook.setAttribute("aria-hidden","false");
   }
