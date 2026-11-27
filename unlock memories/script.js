@@ -626,9 +626,6 @@
   });
 
   $("btnClose").addEventListener("click", ()=>{
-    wantPlay = false;
-    audio.pause();
-    started = false;
     pageBook.classList.add("hidden"); pageBook.setAttribute("aria-hidden","true");
     pageLock.classList.remove("hidden"); pageLock.setAttribute("aria-hidden","false");
     input.value = "";
