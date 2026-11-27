@@ -85,7 +85,7 @@
       if(spot===2){ wrap(g,230,150,20,10,"rgba(10,24,88,.75)"); }
       return finishTex(t);
     }
-    const EW = 1024, EH = 512;
+    const EW = 768, EH = 384;
     let earthLand = null, earthCloud = null;
     function hsh(ix,iy,s){
       let h = Math.imul(ix,374761393)+Math.imul(iy,668265263)+Math.imul(s,1442695041);
@@ -119,7 +119,7 @@
         const v = j/EH, lat = Math.abs(v-.5)*2;
         for(let i=0;i<EW;i++){
           const u = i/EW;
-          let e = fbm(u,v,4,2,6,3);
+          let e = fbm(u,v,4,2,5,3);
           e = (e-.5)*1.9+.5;
           e += (fbm(u,v,2,1,2,41)-.5)*.35;
           const m = fbm(u,v,5,3,4,91);
@@ -147,66 +147,79 @@
           const k = (j*EW+i)*4;
           earthLand[k] = col[0]; earthLand[k+1] = col[1]; earthLand[k+2] = col[2];
           earthLand[k+3] = e<SEA ? 1 : 0;
-          let c = fbm(u,v,6,3,6,133);
+          let c = fbm(u,v,6,3,5,133);
           c = sm(.56,.8,c+(fbm(u,v,3,6,2,57)-.5)*.2);
           earthCloud[j*EW+i] = c*215;
         }
       }
     }
-    let eCan = null, eCtx = null, eImg = null, eSize = 0;
-    function earthDraw(X,Y,R,lx,ly,al){
-      if(!earthLand) buildEarth();
-      const Rd = Math.max(6,Math.min(Math.round(R*d),300));
-      const S = Rd*2;
-      if(eSize!==S){
-        eCan = mk(S,S); eCtx = eCan.getContext("2d"); eImg = eCtx.createImageData(S,S); eSize = S;
-      }
-      const out = eImg.data;
-      let Lx = lx*.92, Ly = -ly*.92, Lz = .85;
-      const Ln = Math.hypot(Lx,Ly,Lz); Lx /= Ln; Ly /= Ln; Lz /= Ln;
-      const rot = time*.32, crot = time*.4;
+    let eCan = null, eCtx = null, eImg = null, eKey = 0, eG = null;
+    function earthGeom(Rd){
+      const S = Rd*2, N = S*S;
+      const g = {S:S,nx:new Float32Array(N),ny:new Float32Array(N),nz:new Float32Array(N),
+        u0:new Float32Array(N),vj:new Int16Array(N),limb:new Float32Array(N),edge:new Float32Array(N),ins:new Uint8Array(N)};
       const tl = .41, ct = Math.cos(tl), st = Math.sin(tl);
-      const sp = x.globalAlpha;
       for(let py=0;py<S;py++){
         const ny0 = -((py+.5)-Rd)/Rd;
         for(let px=0;px<S;px++){
           const nx0 = ((px+.5)-Rd)/Rd;
-          const r2 = nx0*nx0+ny0*ny0;
-          const o = (py*S+px)*4;
-          if(r2>=1){ out[o+3] = 0; continue; }
+          const r2 = nx0*nx0+ny0*ny0, p = py*S+px;
+          if(r2>=1) continue;
           const nz0 = Math.sqrt(1-r2);
-          const edge = Math.min(1,(1-Math.sqrt(r2))*Rd);
+          g.ins[p] = 1;
+          g.nx[p] = nx0; g.ny[p] = ny0; g.nz[p] = nz0;
+          g.edge[p] = Math.min(1,(1-Math.sqrt(r2))*Rd);
           const bx = nx0*ct-ny0*st, by = nx0*st+ny0*ct;
-          const lon = Math.atan2(bx,nz0)+rot;
-          const lt = Math.asin(by);
-          let uu = lon/TAU+.5; uu -= Math.floor(uu);
-          const vv = .5-lt/Math.PI;
-          const ti = Math.min(EW-1,(uu*EW)|0), tj = Math.min(EH-1,Math.max(0,(vv*EH)|0));
-          const k = (tj*EW+ti)*4;
-          let r = earthLand[k], g = earthLand[k+1], b = earthLand[k+2];
-          const ocean = earthLand[k+3]===1;
-          let cu = (lon+(crot-rot))/TAU+.5; cu -= Math.floor(cu);
-          const cl = earthCloud[tj*EW+Math.min(EW-1,(cu*EW)|0)]/255;
-          const dif = Math.max(0,nx0*Lx+ny0*Ly+nz0*Lz);
-          let sh = Math.pow(Math.min(1,(nx0*Lx+ny0*Ly+nz0*Lz+.3)/1.3>0?(nx0*Lx+ny0*Ly+nz0*Lz+.3)/1.3:0),.9);
-          const term = sm(0,.16,dif);
-          let spec = 0;
-          if(ocean){
-            const hx = Lx, hy = Ly, hz = Lz+1, hn = Math.hypot(hx,hy,hz);
-            const nh = (nx0*hx+ny0*hy+nz0*hz)/hn;
-            spec = Math.pow(Math.max(0,nh),90)*.7*term*(1-cl*.8);
-          }
-          const sc = .95*sh+.1;
-          r = r*sc; g = g*sc; b = b*sc;
-          const cs = Math.min(1,.12+sh*1.0);
-          r = r*(1-cl)+(244*cs)*cl; g = g*(1-cl)+(246*cs)*cl; b = b*(1-cl)+(252*cs)*cl;
-          const limb = Math.pow(1-nz0,2.6);
-          const at = limb*(.25+.9*sh);
-          r += 70*at+255*spec; g += 130*at+250*spec; b += 255*at+235*spec;
-          const dark = (1-term)*limb*.0;
-          out[o] = r; out[o+1] = g; out[o+2] = b;
-          out[o+3] = 255*edge;
+          g.u0[p] = Math.atan2(bx,nz0)/TAU+.5;
+          const vv = .5-Math.asin(by)/Math.PI;
+          g.vj[p] = Math.min(EH-1,Math.max(0,(vv*EH)|0));
+          g.limb[p] = Math.pow(1-nz0,2.6);
         }
+      }
+      return g;
+    }
+    function earthDraw(X,Y,R,lx,ly,al){
+      const Rd = Math.max(6,Math.min(Math.round(R*d),200));
+      const key = Rd<=48 ? Rd : Math.min(200,Math.ceil(Rd/8)*8);
+      if(!eG || eKey!==key){
+        eG = earthGeom(key); eKey = key;
+        eCan = mk(eG.S,eG.S); eCtx = eCan.getContext("2d"); eImg = eCtx.createImageData(eG.S,eG.S);
+      }
+      const G = eG, N = G.S*G.S, out = eImg.data;
+      let Lx = lx*.92, Ly = -ly*.92, Lz = .85;
+      const Ln = Math.hypot(Lx,Ly,Lz); Lx /= Ln; Ly /= Ln; Lz /= Ln;
+      const hx = Lx, hy = Ly, hz = Lz+1, hn = Math.hypot(hx,hy,hz);
+      const ou = time*.32/TAU, oc = time*.4/TAU;
+      const nxA = G.nx, nyA = G.ny, nzA = G.nz, u0 = G.u0, vj = G.vj, limbA = G.limb, edgeA = G.edge, ins = G.ins;
+      for(let p=0;p<N;p++){
+        const o = p*4;
+        if(ins[p]===0){ out[o+3] = 0; continue; }
+        const nx0 = nxA[p], ny0 = nyA[p], nz0 = nzA[p];
+        let uu = u0[p]+ou; uu -= Math.floor(uu);
+        let ti = (uu*EW)|0; if(ti>=EW) ti = EW-1;
+        let cu = u0[p]+oc; cu -= Math.floor(cu);
+        let ci = (cu*EW)|0; if(ci>=EW) ci = EW-1;
+        const tj = vj[p];
+        const k = (tj*EW+ti)*4;
+        let r = earthLand[k], g = earthLand[k+1], b = earthLand[k+2];
+        const cl = earthCloud[tj*EW+ci]/255;
+        const raw = nx0*Lx+ny0*Ly+nz0*Lz;
+        let sh = (raw+.3)/1.3; if(sh<0) sh = 0;
+        let spec = 0;
+        if(earthLand[k+3]===1 && raw>0){
+          const nh = (nx0*hx+ny0*hy+nz0*hz)/hn;
+          if(nh>.93){
+            let tt = raw/.16; if(tt>1) tt = 1;
+            spec = Math.pow(nh,90)*.7*(tt*tt*(3-2*tt))*(1-cl*.8);
+          }
+        }
+        const sc = .95*sh+.1;
+        r *= sc; g *= sc; b *= sc;
+        let cs = .12+sh; if(cs>1) cs = 1;
+        r = r*(1-cl)+(244*cs)*cl; g = g*(1-cl)+(246*cs)*cl; b = b*(1-cl)+(252*cs)*cl;
+        const at = limbA[p]*(.25+.9*sh);
+        out[o] = r+70*at+255*spec; out[o+1] = g+130*at+250*spec; out[o+2] = b+255*at+235*spec;
+        out[o+3] = 255*edgeA[p];
       }
       eCtx.putImageData(eImg,0,0);
       x.save();
@@ -454,6 +467,7 @@
     c.addEventListener("pointerup",unlock);
     c.addEventListener("touchend",unlock,{passive:true});
 
+    buildEarth();
     resize();
     addEventListener("resize",resize);
     raf = requestAnimationFrame(frame);
