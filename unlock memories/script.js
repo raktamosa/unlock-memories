@@ -31,7 +31,7 @@
         x.beginPath(); x.arc(s.x,s.y,s.r,0,6.283);
         x.fillStyle = `rgba(190,212,255,${s.a})`; x.fill();
       });
-      if(!matchMedia("(prefers-reduced-motion:reduce)").matches) requestAnimationFrame(draw);
+      requestAnimationFrame(draw);
     }
     size(); draw();
     addEventListener("resize", size);
@@ -544,7 +544,7 @@
     const letter = $("letter");
   const flipSheets = document.querySelectorAll(".sheet.s1, .sheet.s2");
   const rollSize = ()=>parseFloat(getComputedStyle(letter).lineHeight)||34;
-  const reduceMotion = matchMedia("(prefers-reduced-motion:reduce)").matches;
+  const reduceMotion = false;
   const rolls = new Map();
 
   flipSheets.forEach(sheet=>{

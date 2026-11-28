@@ -392,10 +392,6 @@ button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
   .modal-head{padding:6px 48px;font-size:18px}
   .leaf{min-height:240px}
 }
-@media (prefers-reduced-motion:reduce){
-  *{animation:none!important;transition-duration:.01s!important}
-  .sheet.flipped{visibility:hidden}
-}
 #pageBook:not(.hidden) .modal{animation:modalIn .9s cubic-bezier(.2,.8,.2,1) backwards}
 #pageBook:not(.hidden) .polaroid{animation:polIn 1s cubic-bezier(.2,.85,.25,1) backwards}
 #pageBook:not(.hidden) .polaroid:nth-child(1){animation-delay:.55s}
